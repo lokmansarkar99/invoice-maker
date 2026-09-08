@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Home, LayoutDashboard, FolderGit2, GraduationCap, Briefcase, Wrench, Code, MessageSquare, LogOut, Settings } from "lucide-react";
+import { Menu, X, Home, LayoutDashboard, Globe, FolderGit2, GraduationCap, Briefcase, Wrench, Code, MessageSquare, LogOut, Settings } from "lucide-react";
 import { logoutAction } from "@/actions/auth";
 
 export default function Sidebar() {
@@ -11,6 +11,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const links = [
+    { name: "Public Site", href: "/", icon: <Globe size={18} /> },
     { name: "Dashboard", href: "/admin/dashboard", icon: <LayoutDashboard size={18} /> },
     { name: "Invoices", href: "/admin/invoices", icon: <Briefcase size={18} /> },
     { name: "Products", href: "/admin/products", icon: <Code size={18} /> },
@@ -23,7 +24,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile Toggle Button */}
-      <div className="md:hidden fixed top-4 right-4 z-50">
+      <div className="md:hidden fixed top-4 right-4 z-50 print:hidden">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-lg bg-[#0f172a] border border-white/10 text-teal-400 focus:outline-none"

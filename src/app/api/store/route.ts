@@ -8,6 +8,7 @@ const storeSchema = z.object({
   proprietorName: z.string().min(1, "Proprietor name is required"),
   address: z.string().min(1, "Address is required"),
   phone: z.string().min(1, "Phone is required"),
+  email: z.string().optional().or(z.literal("")),
   storeImageUrl: z.string().optional(),
 });
 

@@ -56,7 +56,7 @@ export default function Home() {
             <span className="text-4xl text-gray-500">Logo</span>
           </div>
         )}
-        <h1 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">{store?.storeName || "Store Name"}</h1>
+        <h1 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight">{store?.storeName || "Store Name"}</h1>
         <p className="text-gray-400 text-lg">Download or print your invoice online.</p>
       </div>
 

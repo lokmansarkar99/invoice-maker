@@ -10,6 +10,7 @@ export default function StorePage() {
     proprietorName: "",
     address: "",
     phone: "",
+    email: "",
     storeImageUrl: "",
   });
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,7 @@ export default function StorePage() {
             proprietorName: json.data.proprietorName || "",
             address: json.data.address || "",
             phone: json.data.phone || "",
+            email: json.data.email || "",
             storeImageUrl: json.data.storeImageUrl || "",
           });
         }
@@ -129,9 +131,16 @@ export default function StorePage() {
             <input required name="address" value={formData.address} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-300">Phone *</label>
-            <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-300">Phone *</label>
+              <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+            </div>
+
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-300">Email (Optional)</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+            </div>
           </div>
 
           <button disabled={saving} type="submit" className="flex items-center justify-center space-x-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-black font-bold py-3 px-6 rounded-lg shadow-lg transition-all">

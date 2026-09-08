@@ -5,6 +5,7 @@ export interface IStore extends Document {
   proprietorName: string;
   address: string;
   phone: string;
+  email?: string;
   storeImageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -15,6 +16,7 @@ const StoreSchema: Schema = new Schema({
   proprietorName: { type: String, required: true },
   address: { type: String, required: true },
   phone: { type: String, required: true },
+  email: { type: String },
   storeImageUrl: { type: String },
 }, { timestamps: true });
 

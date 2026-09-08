@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Printer, Download, Edit2, Trash2 } from "lucide-react";
+import { Printer, Download, Edit2, Trash2, MapPin, Phone, Mail, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -106,54 +106,64 @@ export default function InvoiceView({ invoiceId, isAdmin = false }: { invoiceId:
       </div>
 
       {/* A4 Print Container */}
-      <div className="bg-white text-black p-8 md:p-12 shadow-2xl rounded-sm print:shadow-none print:p-0">
+      <div className="bg-white text-black p-8 md:p-12 shadow-2xl rounded-sm print:shadow-none print:p-0 relative">
         
+        {/* Print-only browser-like header */}
+        <div className="hidden print:flex justify-between text-[10px] text-gray-500 mb-8">
+          <div>{new Date().toLocaleDateString("en-US")} {new Date().toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' })}</div>
+          <div className="font-semibold">{process.env.NEXT_PUBLIC_APP_NAME || "Invoice Maker"}</div>
+          <div className="w-[100px]"></div> {/* Spacer to keep center balanced */}
+        </div>
+
         {/* Header */}
-        <div className="flex justify-between items-start mb-12 border-b-2 border-gray-200 pb-8">
-          <div className="flex gap-6 items-center">
+        <div className="flex justify-between items-start mb-8">
+          <div className="flex gap-4 items-center max-w-[60%]">
             {store?.storeImageUrl && (
-              <img src={store.storeImageUrl} alt="Store Logo" className="w-24 h-24 object-contain" />
+              <img src={store.storeImageUrl} alt="Store Logo" className="w-28 h-28 object-contain" />
             )}
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 uppercase tracking-wider">{store?.storeName || "Store Name"}</h1>
-              {store?.proprietorName && <p className="text-gray-600 mt-1 font-medium">{store.proprietorName}</p>}
-              {store?.address && <p className="text-gray-500 text-sm mt-1">{store.address}</p>}
-              {store?.phone && <p className="text-gray-500 text-sm">{store.phone}</p>}
+            <div className="break-words  ">
+              <h1 className="text-xl font-bold text-gray-900 uppercase tracking-wide leading-tight mb-1">{store?.storeName || "Store Name"}</h1>
+              {store?.proprietorName && <p className="text-gray-600  font-medium flex items-center gap-2"><User size={14} className="text-gray-500" />{store.proprietorName}</p>}
+              {store?.address && <p className="text-gray-500 text-sm  flex items-center gap-2"><MapPin size={14} className="text-gray-500" />{store.address}</p>}
+              {store?.phone && <p className="text-gray-500 text-sm  flex items-center gap-2"><Phone size={14} className="text-gray-500" />{store.phone}</p>}
+              {store?.email && <p className="text-gray-500 text-sm  flex items-center gap-2"><Mail size={14} className="text-gray-500" />{store.email}</p>}
             </div>
           </div>
           <div className="text-right">
-            <h2 className="text-4xl font-black text-gray-200 uppercase tracking-widest mb-4">Invoice</h2>
-            <p className="text-gray-600 font-medium"><span className="text-gray-400">Invoice No:</span> {invoice.invoiceNumber}</p>
-            <p className="text-gray-600 font-medium"><span className="text-gray-400">Date:</span> {new Date(invoice.createdAt).toLocaleDateString("en-GB", { day: '2-digit', month: 'long', year: 'numeric' })}</p>
-            {isAdmin && <p className="text-gray-600 font-medium mt-2"><span className="text-gray-400">Status:</span> <span className="font-bold">{invoice.status}</span></p>}
+            <h2 className="text-5xl font-black text-gray-300 uppercase tracking-widest mb-4 pr-1">INVOICE</h2>
+            <p className="text-gray-600 font-medium whitespace-nowrap"><span className="text-gray-400">ID:</span> {invoice.invoiceNumber}</p>
+            <p className="text-gray-600 font-medium whitespace-nowrap"><span className="text-gray-400">Date:</span> {new Date(invoice.createdAt).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+            {isAdmin && <p className="text-gray-600 font-medium whitespace-nowrap mt-2"><span className="text-gray-400">Status:</span> <span className="font-bold">{invoice.status}</span></p>}
           </div>
         </div>
+        
+        <hr className="border-t border-gray-300 mb-8" />
 
         {/* Customer Details */}
         <div className="mb-10">
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billed To</h3>
-          <p className="text-lg font-bold text-gray-800">{invoice.customer.name}</p>
-          {invoice.customer.address && <p className="text-gray-600">{invoice.customer.address}</p>}
-          {invoice.customer.phone && <p className="text-gray-600">{invoice.customer.phone}</p>}
+          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Billed To</h3>
+          <p className="text-lg font-bold text-gray-800 flex items-center gap-2"><User size={16} className="text-gray-400" />{invoice.customer.name}</p>
+          {invoice.customer.address && <p className="text-gray-600 mt-1 flex items-center gap-2"><MapPin size={14} className="text-gray-400" />{invoice.customer.address}</p>}
+          {invoice.customer.phone && <p className="text-gray-600 mt-1 flex items-center gap-2"><Phone size={14} className="text-gray-400" />{invoice.customer.phone}</p>}
         </div>
 
         {/* Items Table */}
         <table className="w-full mb-10 text-left border-collapse">
           <thead>
-            <tr className="border-b-2 border-gray-800">
-              <th className="py-3 text-sm font-bold text-gray-700 uppercase tracking-wider">Item Description</th>
-              <th className="py-3 text-sm font-bold text-gray-700 uppercase tracking-wider text-center">Qty</th>
-              <th className="py-3 text-sm font-bold text-gray-700 uppercase tracking-wider text-right">Price</th>
-              <th className="py-3 text-sm font-bold text-gray-700 uppercase tracking-wider text-right">Amount</th>
+            <tr className="bg-[#1e293b] text-white print:bg-[#1e293b] print:text-white" style={{ WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
+              <th className="py-3 px-4 text-xs font-bold uppercase tracking-wider rounded-tl-sm">Product</th>
+              <th className="py-3 px-4 text-xs font-bold uppercase tracking-wider text-center">Qty</th>
+              <th className="py-3 px-4 text-xs font-bold uppercase tracking-wider text-right">Price</th>
+              <th className="py-3 px-4 text-xs font-bold uppercase tracking-wider text-right rounded-tr-sm">Total</th>
             </tr>
           </thead>
           <tbody>
             {invoice.items.map((item: any, i: number) => (
-              <tr key={i} className="border-b border-gray-200">
-                <td className="py-4 text-gray-800 font-medium">{item.name}</td>
-                <td className="py-4 text-gray-800 text-center">{item.quantity}</td>
-                <td className="py-4 text-gray-800 text-right">৳{item.unitPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td className="py-4 text-gray-800 text-right font-medium">৳{item.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+              <tr key={i} className={i % 2 === 0 ? "bg-gray-50 print:bg-gray-50" : "bg-white"} style={i % 2 === 0 ? { WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" } : {}}>
+                <td className="py-4 px-4 text-gray-800 font-medium text-sm">{item.name}</td>
+                <td className="py-4 px-4 text-gray-800 text-center text-sm">{item.quantity}</td>
+                <td className="py-4 px-4 text-gray-800 text-right text-sm">৳{item.unitPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td className="py-4 px-4 text-gray-800 text-right font-medium text-sm">৳{item.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
               </tr>
             ))}
           </tbody>
@@ -161,27 +171,33 @@ export default function InvoiceView({ invoiceId, isAdmin = false }: { invoiceId:
 
         {/* Summary */}
         <div className="flex justify-end mb-16">
-          <div className="w-full max-w-sm">
-            <div className="flex justify-between py-2 text-gray-600">
-              <span>Subtotal</span>
+          <div className="w-full max-w-xs">
+            <div className="flex justify-between py-2 text-sm text-gray-600 font-bold">
+              <span className="uppercase">Subtotal</span>
               <span>৳{invoice.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
             {invoice.discount > 0 && (
-              <div className="flex justify-between py-2 text-gray-600 border-t border-gray-100">
-                <span>Discount</span>
+              <div className="flex justify-between py-2 text-sm text-gray-600 font-bold border-t border-gray-100">
+                <span className="uppercase">Discount</span>
                 <span className="text-red-500">-৳{invoice.discount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             )}
-            <div className="flex justify-between py-4 border-t-2 border-gray-800 mt-2">
-              <span className="text-xl font-bold text-gray-900 uppercase">Grand Total</span>
-              <span className="text-xl font-black text-gray-900">৳{invoice.grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <div className="flex justify-between py-3 border-t-2 border-gray-800 mt-2">
+              <span className="text-lg font-black text-gray-900 uppercase">Total</span>
+              <span className="text-lg font-black text-gray-900">৳{invoice.grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="pt-8 border-t border-gray-200 text-center text-gray-400 text-sm">
-          <p>Thank you for your business!</p>
+        <div className="pt-8 mt-16 flex flex-col text-[10px] text-gray-400 border-t border-gray-200 w-full">
+          
+          <div className="hidden print:block">
+            {typeof window !== 'undefined' ? window.location.href : ''}
+          </div>
+          <div className="uppercase tracking-widest mb-1">
+            {process.env.NEXT_PUBLIC_FOOTER_TEXT || "Thank you for your business!"}
+          </div>
         </div>
 
       </div>
