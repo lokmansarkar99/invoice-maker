@@ -1,0 +1,100 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Search } from "lucide-react";
+import Link from "next/link";
+
+export default function Home() {
+  const [invoiceId, setInvoiceId] = useState("");
+  const [store, setStore] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchStore() {
+      try {
+        const res = await fetch("/api/store");
+        const json = await res.json();
+        if (json.success) setStore(json.data);
+      } catch (err) {}
+    }
+    fetchStore();
+  }, []);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!invoiceId.trim()) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch(`/api/invoices/${invoiceId.trim()}`);
+      const json = await res.json();
+      
+      if (json.success && json.data) {
+        router.push(`/invoice/${json.data.invoiceNumber}`);
+      } else {
+        setError("Invoice not found. Please check your Invoice ID and try again.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
+      <div className="max-w-xl w-full text-center mb-12">
+        {store?.storeImageUrl ? (
+          <img src={store.storeImageUrl} alt="Store Logo" className="w-32 h-32 mx-auto object-contain mb-6 drop-shadow-2xl" />
+        ) : (
+          <div className="w-32 h-32 mx-auto bg-white/5 rounded-full mb-6 flex items-center justify-center">
+            <span className="text-4xl text-gray-500">Logo</span>
+          </div>
+        )}
+        <h1 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">{store?.storeName || "Store Name"}</h1>
+        <p className="text-gray-400 text-lg">Download or print your invoice online.</p>
+      </div>
+
+      <div className="w-full max-w-lg glass p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-blue-500"></div>
+        
+        <h2 className="text-2xl font-bold text-white mb-6">Search Invoice</h2>
+        
+        <form onSubmit={handleSearch} className="space-y-6">
+          <div>
+            <label className="text-sm font-medium text-gray-300 block mb-2">Invoice ID</label>
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <input 
+                type="text" 
+                placeholder="e.g. INV-8F4K2P91" 
+                value={invoiceId}
+                onChange={(e) => setInvoiceId(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-4 text-lg text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all uppercase"
+              />
+            </div>
+            {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+          </div>
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-black font-bold py-4 rounded-xl shadow-lg transition-all text-lg"
+          >
+            {loading ? "Searching..." : "Search"}
+          </button>
+        </form>
+      </div>
+      
+      <div className="mt-16 text-gray-500 text-sm">
+        <Link href="/admin/login" className="hover:text-teal-400 transition-colors">Admin Portal</Link>
+      </div>
+    </div>
+  );
+}
