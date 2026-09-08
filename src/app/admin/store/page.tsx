@@ -68,15 +68,15 @@ export default function StorePage() {
     }
   };
 
-  if (loading) return <div className="text-white p-8">Loading...</div>;
+  if (loading) return <div className="text-gray-900 p-8">Loading...</div>;
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-white mb-8">Store Information</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">Store Information</h1>
       
-      <div className="glass p-6 md:p-8 rounded-2xl max-w-2xl">
+      <div className="bg-white p-6 md:p-8 rounded-2xl max-w-2xl shadow-xl border border-gray-100">
         {message && (
-          <div className={`p-4 mb-6 rounded-lg ${message.includes("success") ? "bg-teal-500/10 text-teal-400 border border-teal-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
+          <div className={`p-4 mb-6 rounded-lg ${message.includes("success") ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-red-50 text-red-700 border border-red-200"}`}>
             {message}
           </div>
         )}
@@ -85,7 +85,7 @@ export default function StorePage() {
           <div className="flex flex-col md:flex-row gap-6">
             {/* Logo Upload */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-300">Store Logo</label>
+              <label className="text-sm font-medium text-gray-700">Store Logo</label>
               <CldUploadWidget 
                 uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "inv_app"}
                 onSuccess={(result: any) => {
@@ -96,7 +96,7 @@ export default function StorePage() {
                   return (
                     <div 
                       onClick={() => open()}
-                      className="w-32 h-32 border-2 border-dashed border-white/20 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition-colors bg-white/5 overflow-hidden"
+                      className="w-32 h-32 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-blue-600 transition-colors bg-gray-50 overflow-hidden"
                     >
                       {formData.storeImageUrl ? (
                         <img src={formData.storeImageUrl} alt="Store Logo" className="w-full h-full object-cover" />
@@ -115,35 +115,35 @@ export default function StorePage() {
             
             <div className="flex-1 space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-300">Store Name *</label>
-                <input required name="storeName" value={formData.storeName} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+                <label className="text-sm font-medium text-gray-700">Store Name *</label>
+                <input required name="storeName" value={formData.storeName} onChange={handleChange} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
               </div>
               
               <div>
-                <label className="text-sm font-medium text-gray-300">Proprietor Name *</label>
-                <input required name="proprietorName" value={formData.proprietorName} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+                <label className="text-sm font-medium text-gray-700">Proprietor Name *</label>
+                <input required name="proprietorName" value={formData.proprietorName} onChange={handleChange} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="text-sm font-medium text-gray-300">Address *</label>
-            <input required name="address" value={formData.address} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+            <label className="text-sm font-medium text-gray-700">Address *</label>
+            <input required name="address" value={formData.address} onChange={handleChange} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
           </div>
 
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
-              <label className="text-sm font-medium text-gray-300">Phone *</label>
-              <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+              <label className="text-sm font-medium text-gray-700">Phone *</label>
+              <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
             </div>
 
             <div className="flex-1">
-              <label className="text-sm font-medium text-gray-300">Email (Optional)</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+              <label className="text-sm font-medium text-gray-700">Email (Optional)</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
             </div>
           </div>
 
-          <button disabled={saving} type="submit" className="flex items-center justify-center space-x-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-black font-bold py-3 px-6 rounded-lg shadow-lg transition-all">
+          <button disabled={saving} type="submit" className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all">
             <Save size={18} />
             <span>{saving ? "Saving..." : "Save Information"}</span>
           </button>

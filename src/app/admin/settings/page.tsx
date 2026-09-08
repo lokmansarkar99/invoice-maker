@@ -4,7 +4,7 @@ import { LogOut } from "lucide-react";
 export default function SettingsPage() {
   return (
     <div>
-      <h1 className="text-3xl font-bold text-white mb-8">Settings</h1>
+      <h1 className="text-3xl font-bold  mb-8">Settings</h1>
       
       <div className="glass p-6 rounded-2xl max-w-xl">
         <h2 className="text-xl font-semibold text-white mb-4">Account Actions</h2>

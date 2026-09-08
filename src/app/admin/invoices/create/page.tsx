@@ -116,41 +116,41 @@ export default function CreateInvoicePage() {
   return (
     <div className="max-w-5xl mx-auto pb-12">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/invoices" className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-white">
+        <Link href="/admin/invoices" className="p-2 bg-white border border-gray-200 hover:bg-gray-50 rounded-lg transition-colors text-gray-700 hover:text-gray-900 shadow-sm">
           <ArrowLeft size={20} />
         </Link>
-        <h1 className="text-3xl font-bold text-white">Create Invoice</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Create Invoice</h1>
       </div>
 
-      {error && <div className="p-4 mb-6 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg">{error}</div>}
+      {error && <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Customer Information */}
-        <div className="glass p-6 md:p-8 rounded-2xl">
-          <h2 className="text-xl font-bold text-white mb-6">Customer Information</h2>
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Customer Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="text-sm font-medium text-gray-300">Name *</label>
-              <input required type="text" value={customer.name} onChange={(e) => setCustomer({...customer, name: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+              <label className="text-sm font-medium text-gray-700">Name *</label>
+              <input required type="text" value={customer.name} onChange={(e) => setCustomer({...customer, name: e.target.value})} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-300">Phone</label>
-              <input type="text" value={customer.phone} onChange={(e) => setCustomer({...customer, phone: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+              <label className="text-sm font-medium text-gray-700">Phone</label>
+              <input type="text" value={customer.phone} onChange={(e) => setCustomer({...customer, phone: e.target.value})} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-300">Address</label>
-              <input type="text" value={customer.address} onChange={(e) => setCustomer({...customer, address: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors" />
+              <label className="text-sm font-medium text-gray-700">Address</label>
+              <input type="text" value={customer.address} onChange={(e) => setCustomer({...customer, address: e.target.value})} className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" />
             </div>
           </div>
         </div>
 
         {/* Products */}
-        <div className="glass p-6 md:p-8 rounded-2xl">
-          <h2 className="text-xl font-bold text-white mb-6">Products</h2>
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Products</h2>
           
           <div className="relative mb-6 z-20">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
               <input 
                 type="text" 
                 placeholder="Search to add product..." 
@@ -160,29 +160,29 @@ export default function CreateInvoicePage() {
                   setIsProductListOpen(true);
                 }}
                 onFocus={() => setIsProductListOpen(true)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-teal-500 transition-colors"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg pl-10 pr-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
               />
             </div>
             
             {isProductListOpen && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-[#1e293b] border border-white/10 rounded-lg shadow-xl max-h-60 overflow-y-auto z-50">
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl max-h-60 overflow-y-auto z-50">
                 <div className="p-2 flex justify-end">
-                  <button type="button" onClick={() => setIsProductListOpen(false)} className="text-xs text-gray-400 hover:text-white">Close</button>
+                  <button type="button" onClick={() => setIsProductListOpen(false)} className="text-xs text-gray-500 hover:text-gray-900">Close</button>
                 </div>
                 {products.length === 0 ? (
-                  <div className="p-4 text-center text-gray-400">No products found</div>
+                  <div className="p-4 text-center text-gray-500">No products found</div>
                 ) : (
                   products.map(p => (
                     <div 
                       key={p._id} 
                       onClick={() => addProduct(p)}
-                      className="p-3 hover:bg-white/5 cursor-pointer flex justify-between items-center transition-colors border-t border-white/5"
+                      className="p-3 hover:bg-gray-50 cursor-pointer flex justify-between items-center transition-colors border-t border-gray-100"
                     >
                       <div>
-                        <div className="text-white font-medium">{p.name}</div>
-                        <div className="text-xs text-gray-400">Stock: {p.stock}</div>
+                        <div className="text-gray-900 font-medium">{p.name}</div>
+                        <div className="text-xs text-gray-500">Stock: {p.stock}</div>
                       </div>
-                      <div className="text-teal-400">৳{p.standardPrice}</div>
+                      <div className="text-blue-600 font-semibold">৳{p.standardPrice}</div>
                     </div>
                   ))
                 )}
@@ -193,26 +193,26 @@ export default function CreateInvoicePage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[600px]">
               <thead>
-                <tr className="border-b border-white/10">
-                  <th className="py-3 px-4 text-gray-400 font-medium w-1/3">Product</th>
-                  <th className="py-3 px-4 text-gray-400 font-medium">Quantity</th>
-                  <th className="py-3 px-4 text-gray-400 font-medium">Unit Price (৳)</th>
-                  <th className="py-3 px-4 text-gray-400 font-medium text-right">Total</th>
-                  <th className="py-3 px-4 text-gray-400 font-medium text-right">Action</th>
+                <tr className="border-b border-gray-200">
+                  <th className="py-3 px-4 text-gray-600 font-medium w-1/3">Product</th>
+                  <th className="py-3 px-4 text-gray-600 font-medium">Quantity</th>
+                  <th className="py-3 px-4 text-gray-600 font-medium">Unit Price (৳)</th>
+                  <th className="py-3 px-4 text-gray-600 font-medium text-right">Total</th>
+                  <th className="py-3 px-4 text-gray-600 font-medium text-right">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {items.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-gray-400">
+                    <td colSpan={5} className="py-8 text-center text-gray-500">
                       No products added yet. Use the search above to add products.
                     </td>
                   </tr>
                 ) : items.map((item, index) => (
-                  <tr key={index} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-4">
-                      <div className="font-medium text-white">{item.name}</div>
-                      <div className={`text-xs ${item.quantity > item.stock ? "text-red-400" : "text-gray-400"}`}>
+                      <div className="font-medium text-gray-900">{item.name}</div>
+                      <div className={`text-xs ${item.quantity > item.stock ? "text-red-600" : "text-gray-500"}`}>
                         Stock: {item.stock}
                       </div>
                     </td>
@@ -222,7 +222,7 @@ export default function CreateInvoicePage() {
                         min="1" 
                         value={item.quantity} 
                         onChange={(e) => updateItem(index, 'quantity', Number(e.target.value))}
-                        className="w-20 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white focus:outline-none focus:border-teal-500"
+                        className="w-20 bg-white border border-gray-300 rounded-lg px-2 py-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
                       />
                     </td>
                     <td className="py-3 px-4">
@@ -232,17 +232,17 @@ export default function CreateInvoicePage() {
                         step="0.01"
                         value={item.unitPrice} 
                         onChange={(e) => updateItem(index, 'unitPrice', Number(e.target.value))}
-                        className="w-24 bg-white/5 border border-teal-500/50 rounded-lg px-2 py-1 text-white focus:outline-none focus:border-teal-500"
+                        className="w-24 bg-white border border-blue-600 rounded-lg px-2 py-1 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600"
                       />
                     </td>
-                    <td className="py-3 px-4 text-right text-gray-300">
+                    <td className="py-3 px-4 text-right text-gray-600 font-medium">
                       ৳{(item.quantity * item.unitPrice).toLocaleString()}
                     </td>
                     <td className="py-3 px-4 text-right">
                       <button 
                         type="button"
                         onClick={() => removeItem(index)}
-                        className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors inline-block"
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors inline-block"
                       >
                         <Trash2 size={18} />
                       </button>
@@ -256,14 +256,14 @@ export default function CreateInvoicePage() {
 
         {/* Summary & Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="glass p-6 md:p-8 rounded-2xl h-fit">
-            <h2 className="text-xl font-bold text-white mb-6">Invoice Status</h2>
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 h-fit">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Invoice Status</h2>
             <div>
-              <label className="text-sm font-medium text-gray-300">Status</label>
+              <label className="text-sm font-medium text-gray-700">Status</label>
               <select 
                 value={status} 
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-1 text-white focus:outline-none focus:border-teal-500 transition-colors"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
               >
                 <option value="PAID">PAID</option>
                 <option value="DUE">DUE</option>
@@ -272,36 +272,36 @@ export default function CreateInvoicePage() {
             </div>
           </div>
           
-          <div className="glass p-6 md:p-8 rounded-2xl">
-            <h2 className="text-xl font-bold text-white mb-6">Summary</h2>
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Summary</h2>
             
             <div className="space-y-4">
-              <div className="flex justify-between items-center text-gray-300">
+              <div className="flex justify-between items-center text-gray-600">
                 <span>Subtotal</span>
-                <span>৳{subtotal.toLocaleString()}</span>
+                <span className="font-medium">৳{subtotal.toLocaleString()}</span>
               </div>
               
-              <div className="flex justify-between items-center text-gray-300">
+              <div className="flex justify-between items-center text-gray-600">
                 <span>Discount (৳)</span>
                 <input 
                   type="number" 
                   min="0"
                   value={discount} 
                   onChange={(e) => setDiscount(Number(e.target.value))}
-                  className="w-24 bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-white text-right focus:outline-none focus:border-teal-500"
+                  className="w-24 bg-gray-50 border border-gray-300 rounded-lg px-2 py-1 text-gray-900 text-right focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
                 />
               </div>
               
-              <div className="pt-4 border-t border-white/10 flex justify-between items-center">
-                <span className="text-lg font-bold text-white">Grand Total</span>
-                <span className="text-2xl font-bold text-teal-400">৳{grandTotal.toLocaleString()}</span>
+              <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
+                <span className="text-lg font-bold text-gray-900">Grand Total</span>
+                <span className="text-2xl font-bold text-blue-600">৳{grandTotal.toLocaleString()}</span>
               </div>
             </div>
 
             <button 
               type="submit" 
               disabled={saving}
-              className="w-full mt-8 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-black font-bold py-3 rounded-lg shadow-lg transition-all"
+              className="w-full mt-8 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-3 rounded-lg shadow-md transition-all"
             >
               {saving ? "Creating Invoice..." : "Save Invoice"}
             </button>
