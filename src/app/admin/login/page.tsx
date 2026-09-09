@@ -8,11 +8,25 @@ import Link from "next/link";
 
 export default function AdminLogin() {
   const [error, setError] = useState("");
+  const [storeName, setStoreName] = useState("");
   const router = useRouter();
 
   // Ensure body scroll is hidden on mount for this specific page
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    
+    // Fetch store name
+    async function fetchStore() {
+      try {
+        const res = await fetch("/api/store");
+        const json = await res.json();
+        if (json.success && json.data?.storeName) {
+          setStoreName(json.data.storeName);
+        }
+      } catch (err) {}
+    }
+    fetchStore();
+
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -52,8 +66,8 @@ export default function AdminLogin() {
         {/* Terminal Header */}
         <div className="flex items-center gap-2 border-b border-cyan-500/30 pb-3 mb-6">
           <Terminal size={20} className="text-cyan-400" />
-          <h2 className="text-lg sm:text-xl font-bold text-cyan-400 tracking-widest uppercase">
-            SYS_AUTH
+          <h2 className="text-md sm:text-md font-bold text-cyan-400 tracking-widest uppercase">
+            SYS_AUTH {storeName ? `// ${storeName}` : ""}
           </h2>
           <span className="w-2 h-4 bg-cyan-400 animate-pulse ml-1"></span>
         </div>
