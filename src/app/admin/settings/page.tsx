@@ -1,21 +1,29 @@
 import { logoutAction } from "@/actions/auth";
-import { LogOut } from "lucide-react";
+import { LogOut, Terminal } from "lucide-react";
 
 export default function SettingsPage() {
   return (
     <div>
-      <h1 className="text-3xl font-bold  mb-8">Settings</h1>
+      <div className="flex items-center gap-2 mb-8 border-b border-cyan-500/30 pb-4 inline-block">
+        <h1 className="text-2xl font-bold text-cyan-400 tracking-widest inline-flex items-center gap-2">
+          <Terminal size={24} />
+          SYS_SETTINGS
+        </h1>
+        <span className="w-2 h-4 bg-cyan-400 animate-pulse ml-1 inline-block"></span>
+      </div>
       
-      <div className="glass p-6 rounded-2xl max-w-xl">
-        <h2 className="text-xl font-semibold text-white mb-4">Account Actions</h2>
+      <div className="bg-black/80 backdrop-blur-md border border-cyan-500/50 p-6 sm:p-8 max-w-xl shadow-[0_0_30px_rgba(6,182,212,0.15)] relative">
+        <h2 className="text-lg font-bold text-cyan-400 mb-6 tracking-widest border-b border-cyan-900 pb-2">
+          // ACCOUNT_ACTIONS
+        </h2>
         
         <form action={logoutAction}>
           <button
             type="submit"
-            className="flex items-center space-x-2 px-6 py-3 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-lg transition-colors font-medium"
+            className="flex items-center space-x-3 px-6 py-4 bg-red-950/30 text-red-500 hover:bg-red-900/50 hover:text-red-400 border border-red-500/50 hover:border-red-400 transition-colors font-bold text-sm tracking-widest shadow-[0_0_15px_rgba(239,68,68,0.2)] group"
           >
-            <LogOut size={20} />
-            <span>Sign Out</span>
+            <LogOut size={20} className="group-hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+            <span>Logout</span>
           </button>
         </form>
       </div>

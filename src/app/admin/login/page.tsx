@@ -66,21 +66,21 @@ export default function AdminLogin() {
         {/* Terminal Header */}
         <div className="flex items-center gap-2 border-b border-cyan-500/30 pb-3 mb-6">
           <Terminal size={20} className="text-cyan-400" />
-          <h2 className="text-md sm:text-md font-bold text-cyan-400 tracking-widest uppercase">
+          <h2 className="text-md sm:text-md font-bold text-cyan-400 tracking-widest">
             SYS_AUTH {storeName ? `// ${storeName}` : ""}
           </h2>
           <span className="w-2 h-4 bg-cyan-400 animate-pulse ml-1"></span>
         </div>
         
         {error && (
-          <div className="bg-red-950/50 text-red-500 font-bold border-l-4 border-red-500 p-3 mb-6 text-xs sm:text-sm uppercase tracking-wide">
+          <div className="bg-red-950/50 text-red-500 font-bold border-l-4 border-red-500 p-3 mb-6 text-xs sm:text-sm tracking-wide">
             [FATAL] {error}
           </div>
         )}
         
         <form action={handleSubmit} className="space-y-5">
           <div className="group">
-            <label className="text-[10px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest block mb-1 group-focus-within:text-cyan-400 transition-colors">
+            <label className="text-[10px] sm:text-xs font-bold text-cyan-600 tracking-widest block mb-1 group-focus-within:text-cyan-400 transition-colors">
               // USER_IDENTIFICATION
             </label>
             <div className="relative">
@@ -96,7 +96,7 @@ export default function AdminLogin() {
           </div>
           
           <div className="group">
-            <label className="text-[10px] sm:text-xs font-bold text-cyan-600 uppercase tracking-widest block mb-1 group-focus-within:text-cyan-400 transition-colors">
+            <label className="text-[10px] sm:text-xs font-bold text-cyan-600 tracking-widest block mb-1 group-focus-within:text-cyan-400 transition-colors">
               // SECURE_PASSPHRASE
             </label>
             <div className="relative">
@@ -113,7 +113,7 @@ export default function AdminLogin() {
           
           <button 
             type="submit" 
-            className="w-full bg-cyan-950/50 text-cyan-400 text-sm sm:text-base uppercase tracking-widest font-bold py-3 border border-cyan-500/50 hover:bg-cyan-900/50 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all mt-6 flex items-center justify-center gap-2 relative overflow-hidden group"
+            className="w-full bg-cyan-950/50 text-cyan-400 text-sm sm:text-base tracking-widest font-bold py-3 border border-cyan-500/50 hover:bg-cyan-900/50 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all mt-6 flex items-center justify-center gap-2 relative overflow-hidden group"
           >
             <span className="relative z-10">EXECUTE_LOGIN</span>
             <div className="absolute inset-0 bg-cyan-400/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
@@ -121,7 +121,7 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-6 pt-4 border-t border-cyan-500/30 text-center">
-          <Link href="/" className="text-[10px] sm:text-xs text-cyan-700 hover:text-cyan-400 uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+          <Link href="/" className="text-[10px] sm:text-xs text-cyan-700 hover:text-cyan-400 tracking-widest transition-colors flex items-center justify-center gap-2">
             {"<"} Return to Front_End
           </Link>
         </div>

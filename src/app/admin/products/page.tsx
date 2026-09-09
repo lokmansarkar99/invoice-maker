@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Search, Edit2, Trash2, X } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, X, Terminal } from "lucide-react";
 
 type Product = {
   _id: string;
@@ -97,7 +97,7 @@ export default function ProductsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Delete Product? This action cannot be undone.")) {
+    if (confirm("EXECUTE DELETE? Action cannot be reversed.")) {
       try {
         const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
         const json = await res.json();
@@ -112,67 +112,73 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">Products</h1>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-cyan-500/30 pb-4">
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-cyan-400 tracking-widest inline-flex items-center gap-2">
+            <Terminal size={24} />
+            SYS_INVENTORY
+          </h1>
+          <span className="w-2 h-4 bg-cyan-400 animate-pulse ml-1 inline-block"></span>
+        </div>
         <button 
           onClick={() => handleOpenModal()}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md"
+          className="bg-cyan-950/50 hover:bg-cyan-900/50 text-cyan-400 font-bold py-2 px-4 border border-cyan-500/50 hover:border-cyan-400 flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.2)] tracking-widest text-sm"
         >
-          <Plus size={20} />
-          <span>Add Product</span>
+          <Plus size={18} />
+          <span>ADD_NODE</span>
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-        <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+      <div className="bg-black/80 backdrop-blur-md p-6 border border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)] relative">
+        <div className="relative mb-6 group">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-500 font-bold">{">"}</span>
           <input 
             type="text" 
-            placeholder="Search products..." 
+            placeholder="QUERY_INVENTORY..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-gray-50 border border-gray-300 rounded-lg pl-10 pr-4 py-3 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+            className="w-full bg-black/50 border border-cyan-900 text-cyan-300 rounded-none pl-10 pr-4 py-3 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all placeholder-cyan-900"
           />
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="py-3 px-4 text-gray-600 font-medium">Product</th>
-                <th className="py-3 px-4 text-gray-600 font-medium">Standard Price</th>
-                <th className="py-3 px-4 text-gray-600 font-medium">Stock</th>
-                <th className="py-3 px-4 text-gray-600 font-medium text-right">Action</th>
+              <tr className="border-b border-cyan-900 bg-cyan-950/30">
+                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Product Name</th>
+                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Price</th>
+                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Stock</th>
+                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={4} className="py-8 text-center text-gray-500">Loading...</td></tr>
+                <tr><td colSpan={4} className="py-8 text-center text-cyan-700 animate-pulse tracking-widest text-xs font-bold">Loading...</td></tr>
               ) : products.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-gray-500">
-                    No products found.
+                  <td colSpan={4} className="py-8 text-center text-red-500 tracking-widest text-xs font-bold">
+                    NULL_RESULT: No records found.
                   </td>
                 </tr>
               ) : (
                 products.map((product) => (
-                  <tr key={product._id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-4 font-medium text-gray-900">{product.name}</td>
-                    <td className="py-3 px-4 text-gray-600">৳{product.standardPrice.toLocaleString()}</td>
-                    <td className="py-3 px-4 text-gray-600">{product.stock}</td>
+                  <tr key={product._id} className="border-b border-cyan-900/50 hover:bg-cyan-950/30 transition-colors group">
+                    <td className="py-3 px-4 font-medium text-cyan-400">{product.name}</td>
+                    <td className="py-3 px-4 text-cyan-300">৳{product.standardPrice.toLocaleString()}</td>
+                    <td className="py-3 px-4 text-cyan-300">{product.stock}</td>
                     <td className="py-3 px-4">
                       <div className="flex justify-end gap-2">
                         <button 
                           onClick={() => handleOpenModal(product)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-cyan-600 hover:text-cyan-300 hover:bg-cyan-950/80 border border-transparent hover:border-cyan-500/50 transition-colors"
                         >
-                          <Edit2 size={18} />
+                          <Edit2 size={16} />
                         </button>
                         <button 
                           onClick={() => handleDelete(product._id)}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-2 text-red-700 hover:text-red-400 hover:bg-red-950/50 border border-transparent hover:border-red-500/50 transition-colors"
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </td>
@@ -186,70 +192,89 @@ export default function ProductsPage() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
-            <div className="flex justify-between items-center p-6 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900">{editingId ? "Edit Product" : "Add Product"}</h2>
-              <button onClick={handleCloseModal} className="text-gray-500 hover:text-gray-900 transition-colors">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-[2px] z-50 flex items-center justify-center p-4">
+          <div className="bg-black/95 border border-cyan-500/80 shadow-[0_0_40px_rgba(6,182,212,0.3)] w-full max-w-md overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-cyan-400"></div>
+            <div className="flex justify-between items-center p-6 border-b border-cyan-900">
+              <h2 className="text-lg font-bold text-cyan-400 tracking-widest inline-flex items-center gap-2">
+                <Terminal size={18} />
+                {editingId ? "EDIT_NODE_DATA" : "INITIALIZE_NODE"}
+              </h2>
+              <button onClick={handleCloseModal} className="text-cyan-600 hover:text-cyan-400 transition-colors">
                 <X size={24} />
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {modalError && <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-lg text-sm">{modalError}</div>}
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              {modalError && <div className="p-3 bg-red-950/50 text-red-500 border border-red-500/50 text-xs font-bold tracking-widest">{modalError}</div>}
               
-              <div>
-                <label className="text-sm font-medium text-gray-700">Product Name *</label>
-                <input 
-                  required 
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" 
-                />
+              <div className="group">
+                <label className="text-[10px] font-bold text-cyan-600 tracking-widest block mb-1">
+                  // PRODUCT_IDENTIFIER *
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-700 font-bold">{">"}</span>
+                  <input 
+                    required 
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full bg-black border border-cyan-900 text-cyan-300 pl-8 pr-4 py-2 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-colors" 
+                  />
+                </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Standard Price (৳) *</label>
-                  <input 
-                    required 
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={formData.standardPrice}
-                    onChange={(e) => setFormData({...formData, standardPrice: Number(e.target.value)})}
-                    className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" 
-                  />
+                <div className="group">
+                  <label className="text-[10px] font-bold text-cyan-600 tracking-widest block mb-1">
+                    // BASE_VAL (৳) *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-700 font-bold">{">"}</span>
+                    <input 
+                      required 
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={formData.standardPrice}
+                      onChange={(e) => setFormData({...formData, standardPrice: Number(e.target.value)})}
+                      className="w-full bg-black border border-cyan-900 text-cyan-300 pl-8 pr-4 py-2 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-colors" 
+                    />
+                  </div>
                 </div>
                 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Stock *</label>
-                  <input 
-                    required 
-                    type="number"
-                    min="0"
-                    value={formData.stock}
-                    onChange={(e) => setFormData({...formData, stock: Number(e.target.value)})}
-                    className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 mt-1 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors" 
-                  />
+                <div className="group">
+                  <label className="text-[10px] font-bold text-cyan-600 tracking-widest block mb-1">
+                    // UNITS_AVAILABLE *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-700 font-bold">{">"}</span>
+                    <input 
+                      required 
+                      type="number"
+                      min="0"
+                      value={formData.stock}
+                      onChange={(e) => setFormData({...formData, stock: Number(e.target.value)})}
+                      className="w-full bg-black border border-cyan-900 text-cyan-300 pl-8 pr-4 py-2 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-colors" 
+                    />
+                  </div>
                 </div>
               </div>
               
-              <div className="pt-4 flex justify-end gap-3">
+              <div className="pt-4 flex justify-end gap-3 border-t border-cyan-900 mt-6">
                 <button 
                   type="button" 
                   onClick={handleCloseModal}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                  className="px-4 py-2 text-cyan-700 hover:text-cyan-400 border border-transparent hover:border-cyan-900 transition-colors font-bold text-xs tracking-widest"
                 >
-                  Cancel
+                  ABORT
                 </button>
                 <button 
                   type="submit" 
                   disabled={modalSaving}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors disabled:opacity-50"
+                  className="bg-cyan-950/50 disabled:opacity-50 text-cyan-400 font-bold py-2 px-6 border border-cyan-500/50 hover:bg-cyan-900/50 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all text-xs tracking-widest"
                 >
-                  {modalSaving ? "Saving..." : "Save"}
+                  {modalSaving ? "EXECUTING..." : "COMMIT_DATA"}
                 </button>
               </div>
             </form>
