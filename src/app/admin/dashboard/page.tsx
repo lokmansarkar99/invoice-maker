@@ -63,8 +63,8 @@ export default async function DashboardPage() {
     {
       title: "Today's Invoices",
       value: stats.todaysInvoices.toLocaleString(),
-      icon: <Briefcase size={24} className="text-purple-600" />,
-      color: "bg-purple-50",
+      icon: <Briefcase size={24} className="text-blue-600" />,
+      color: "bg-blue-50",
     },
     {
       title: "Today's Sales",
