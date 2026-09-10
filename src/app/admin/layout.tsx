@@ -6,10 +6,10 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex bg-black text-cyan-300 font-mono relative overflow-hidden">
+    <div className="min-h-screen flex bg-black light:bg-white text-cyan-300 light:text-slate-900 font-mono light:font-sans relative overflow-hidden">
       {/* Fixed Full Screen Background */}
       <div 
-        className="fixed inset-0 z-0 pointer-events-none"
+        className="fixed inset-0 z-0 pointer-events-none light:hidden"
         style={{
           backgroundImage: "url('/studio-bg.jpg')",
           backgroundSize: "cover",
@@ -17,7 +17,7 @@ export default function DashboardLayout({
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-black/80 light:bg-white backdrop-blur-[2px]"></div>
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
       </div>
 

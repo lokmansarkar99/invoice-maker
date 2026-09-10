@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -26,10 +27,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${poppins.variable} ${geistMono.variable} h-full antialiased light-theme`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans">
-        <main className="flex-grow">{children}</main>
+        <ThemeProvider>
+          <main className="flex-grow">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

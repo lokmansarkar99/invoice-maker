@@ -51,9 +51,9 @@ export default function InvoicesPage() {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-cyan-500/30 pb-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-cyan-500/30 light:border-slate-300 pb-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold text-cyan-400 tracking-widest inline-flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-cyan-400 light:text-slate-900 tracking-widest light:tracking-normal inline-flex items-center gap-2">
             <Terminal size={24} />
             SYS_INVOICES
           </h1>
@@ -61,55 +61,55 @@ export default function InvoicesPage() {
         </div>
         <Link 
           href="/admin/invoices/create"
-          className="bg-cyan-950/50 hover:bg-cyan-900/50 text-cyan-400 font-bold py-2 px-4 border border-cyan-500/50 hover:border-cyan-400 flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.2)] tracking-widest text-sm"
+          className="bg-cyan-950/50 light:bg-slate-200 hover:bg-cyan-900/50 light:hover:bg-indigo-50 text-cyan-400 light:text-slate-900 font-bold py-2 px-4 border border-cyan-500/50 light:border-slate-300 hover:border-cyan-400 light:hover:border-indigo-400 flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.2)] light:shadow-md tracking-widest light:tracking-normal text-sm"
         >
           <Plus size={18} />
           <span>Create Invoice</span>
         </Link>
       </div>
 
-      <div className="bg-black/80 backdrop-blur-md p-6 border border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)] relative">
+      <div className="bg-black/80 light:bg-white backdrop-blur-md p-6 border border-cyan-500/50 light:border-slate-300 shadow-[0_0_30px_rgba(6,182,212,0.15)] relative">
         <div className="relative mb-6 group">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-500 font-bold">{">"}</span>
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-500 light:text-slate-700 font-bold">{">"}</span>
           <input 
             type="text" 
             placeholder="QUERY_INVOICE_DB..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-black/50 border border-cyan-900 text-cyan-300 rounded-none pl-10 pr-4 py-3 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all placeholder-cyan-900"
+            className="w-full bg-black/50 light:bg-white border border-cyan-900 light:border-slate-300 text-cyan-300 light:text-slate-900 rounded-none pl-10 pr-4 py-3 focus:outline-none focus:border-cyan-400 light:focus:border-indigo-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all placeholder-cyan-900"
           />
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-cyan-900 bg-cyan-950/30">
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">ID_Payload</th>
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Client_Entity</th>
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Total</th>
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">State</th>
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest">Timestamp</th>
-                <th className="py-3 px-4 text-cyan-600 font-bold text-xs tracking-widest text-right">Actions</th>
+              <tr className="border-b border-cyan-900 light:border-slate-300 bg-cyan-950/30 light:bg-white">
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal">ID_Payload</th>
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal">Client_Entity</th>
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal">Total</th>
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal">State</th>
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal">Timestamp</th>
+                <th className="py-3 px-4 text-cyan-600 light:text-slate-700 font-bold text-xs tracking-widest light:tracking-normal text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={6} className="py-8 text-center text-cyan-700 animate-pulse tracking-widest text-xs font-bold">Loading...</td></tr>
+                <tr><td colSpan={6} className="py-8 text-center text-cyan-700 light:text-slate-600 animate-pulse tracking-widest light:tracking-normal text-xs font-bold">Loading...</td></tr>
               ) : invoices.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-red-500 tracking-widest text-xs font-bold">
+                  <td colSpan={6} className="py-8 text-center text-red-500 tracking-widest light:tracking-normal text-xs font-bold">
                     NULL_RESULT: No records found.
                   </td>
                 </tr>
               ) : (
                 invoices.map((invoice) => (
                   <tr key={invoice._id} className="border-b border-cyan-900/50 hover:bg-cyan-950/30 transition-colors group">
-                    <td className="py-3 px-4 font-bold text-cyan-400 tracking-wider">{invoice.invoiceNumber}</td>
-                    <td className="py-3 px-4 text-cyan-300 font-medium">
+                    <td className="py-3 px-4 font-bold text-cyan-400 light:text-slate-900 tracking-wider light:tracking-normal">{invoice.invoiceNumber}</td>
+                    <td className="py-3 px-4 text-cyan-300 light:text-slate-900 font-medium">
                       <div className="">{invoice.customer.name}</div>
-                      <div className="text-[10px] text-cyan-600 tracking-widest">{invoice.customer.phone}</div>
+                      <div className="text-[10px] text-cyan-600 light:text-slate-700 tracking-widest light:tracking-normal">{invoice.customer.phone}</div>
                     </td>
-                    <td className="py-3 px-4 text-cyan-300 font-medium">৳{invoice.grandTotal.toLocaleString()}</td>
+                    <td className="py-3 px-4 text-cyan-300 light:text-slate-900 font-medium">৳{invoice.grandTotal.toLocaleString()}</td>
                     <td className="py-3 px-4">
                       <span className={`px-2 py-1 text-[10px] font-bold tracking-widest border ${
                         invoice.status === 'PAID' ? 'bg-cyan-950/50 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.3)]' :
@@ -119,7 +119,7 @@ export default function InvoicesPage() {
                         [{invoice.status}]
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-cyan-600 text-xs font-bold tracking-widest">
+                    <td className="py-3 px-4 text-cyan-600 light:text-slate-700 text-xs font-bold tracking-widest light:tracking-normal">
                       {new Date(invoice.createdAt).toLocaleDateString("en-GB", {
                         day: "2-digit", month: "short", year: "numeric"
                       })}
@@ -128,13 +128,13 @@ export default function InvoicesPage() {
                       <div className="flex justify-end gap-2">
                         <Link 
                           href={`/admin/invoices/${invoice._id}`}
-                          className="p-2 text-cyan-600 hover:text-cyan-300 hover:bg-cyan-950/80 border border-transparent hover:border-cyan-500/50 transition-colors"
+                          className="p-2 text-cyan-600 light:text-slate-700 hover:text-cyan-300 light:hover:text-indigo-700 hover:bg-cyan-950/80 border border-transparent hover:border-cyan-500/50 transition-colors"
                         >
                           <Eye size={16} />
                         </Link>
                         <Link 
                           href={`/admin/invoices/${invoice._id}/edit`}
-                          className="p-2 text-cyan-600 hover:text-cyan-300 hover:bg-cyan-950/80 border border-transparent hover:border-cyan-500/50 transition-colors"
+                          className="p-2 text-cyan-600 light:text-slate-700 hover:text-cyan-300 light:hover:text-indigo-700 hover:bg-cyan-950/80 border border-transparent hover:border-cyan-500/50 transition-colors"
                         >
                           <Edit2 size={16} />
                         </Link>
