@@ -6,7 +6,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex bg-black light:bg-white text-cyan-300 light:text-slate-900 font-mono light:font-sans relative overflow-hidden">
+    <div className="h-screen flex bg-black light:bg-white text-cyan-300 light:text-slate-900 font-mono light:font-sans relative overflow-hidden">
       {/* Fixed Full Screen Background */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none light:hidden"

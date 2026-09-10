@@ -19,7 +19,9 @@ export interface IInvoice extends Document {
   subtotal: number;
   discount: number;
   grandTotal: number;
-  status: "PAID" | "DUE" | "CANCELLED";
+  status: "PAID" | "DUE" | "PARTIAL DUE" | "CANCELLED";
+  dueDate?: Date;
+  advanceAmount?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -43,7 +45,10 @@ const InvoiceSchema: Schema = new Schema({
   subtotal: { type: Number, required: true, min: 0 },
   discount: { type: Number, required: true, min: 0, default: 0 },
   grandTotal: { type: Number, required: true, min: 0 },
-  status: { type: String, enum: ["PAID", "DUE", "CANCELLED"], default: "PAID" },
+  status: { type: String, enum: ["PAID", "DUE", "PARTIAL DUE", "CANCELLED"], default: "PAID" },
+  dueDate: { type: Date },
+  advanceAmount: { type: Number, default: 0, min: 0 },
 }, { timestamps: true });
 
+delete mongoose.models.Invoice;
 export const Invoice = mongoose.models.Invoice || mongoose.model<IInvoice>("Invoice", InvoiceSchema);

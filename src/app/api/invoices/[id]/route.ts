@@ -20,7 +20,9 @@ const invoiceSchema = z.object({
   }),
   items: z.array(invoiceItemSchema).min(1),
   discount: z.number().min(0).default(0),
-  status: z.enum(["PAID", "DUE", "CANCELLED"]).default("PAID"),
+  status: z.enum(["PAID", "DUE", "PARTIAL DUE", "CANCELLED"]).default("PAID"),
+  dueDate: z.string().optional().nullable(),
+  advanceAmount: z.number().min(0).default(0).optional(),
 });
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -133,6 +135,8 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     invoice.discount = validatedData.discount;
     invoice.grandTotal = grandTotal;
     invoice.status = validatedData.status;
+    invoice.dueDate = validatedData.dueDate ? new Date(validatedData.dueDate) : undefined;
+    invoice.advanceAmount = validatedData.advanceAmount || 0;
 
     await invoice.save({ session });
     await session.commitTransaction();

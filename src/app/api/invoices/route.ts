@@ -21,7 +21,9 @@ const invoiceSchema = z.object({
   }),
   items: z.array(invoiceItemSchema).min(1),
   discount: z.number().min(0).default(0),
-  status: z.enum(["PAID", "DUE", "CANCELLED"]).default("PAID"),
+  status: z.enum(["PAID", "DUE", "PARTIAL DUE", "CANCELLED"]).default("PAID"),
+  dueDate: z.string().optional().nullable(),
+  advanceAmount: z.number().min(0).default(0).optional(),
 });
 
 // Generate a random unique ID (e.g. INV-8F4K2P91)
@@ -115,6 +117,8 @@ export async function POST(req: Request) {
       discount: validatedData.discount,
       grandTotal,
       status: validatedData.status,
+      dueDate: validatedData.dueDate ? new Date(validatedData.dueDate) : undefined,
+      advanceAmount: validatedData.advanceAmount || 0,
     });
 
     await invoice.save({ session });

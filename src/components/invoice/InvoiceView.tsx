@@ -218,6 +218,16 @@ export default function InvoiceView({
                   <span className="text-cyan-300 light:text-slate-900 print:text-black">{invoice.status}</span>
                 </p>
               )}
+              {(invoice.status === "DUE" || invoice.status === "PARTIAL DUE") && invoice.dueDate && (
+                <p className="text-xs text-cyan-400 light:text-slate-900 print:text-gray-600 font-bold tracking-widest light:tracking-normal whitespace-nowrap mt-1">
+                  <span className="text-cyan-700 light:text-slate-600 print:text-gray-400 mr-2">Due Date:</span>{" "}
+                  {new Date(invoice.dueDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -261,16 +271,16 @@ export default function InvoiceView({
               }}
             >
               <th className="py-3 px-4 text-[10px] font-bold tracking-widest light:tracking-normal">
-                Payload_ID
+                Item
               </th>
               <th className="py-3 px-4 text-[10px] font-bold tracking-widest light:tracking-normal text-center">
-                Mult
+                Qty
               </th>
               <th className="py-3 px-4 text-[10px] font-bold tracking-widest light:tracking-normal text-right">
-                Base
+                Price
               </th>
               <th className="py-3 px-4 text-[10px] font-bold tracking-widest light:tracking-normal text-right">
-                Agg
+                Total
               </th>
             </tr>
           </thead>
@@ -336,9 +346,9 @@ export default function InvoiceView({
                 </span>
               </div>
             )}
-            <div className="flex justify-between py-3 border-t-2 border-cyan-500 print:border-gray-800 mt-2">
+            <div className={`flex justify-between py-3 border-t-2 border-cyan-500 print:border-gray-800 mt-2 ${!(invoice.status === "DUE" || invoice.status === "PARTIAL DUE") ? "" : "border-t border-cyan-900/30 border-t-1"}`}>
               <span className="text-sm font-black text-cyan-400 light:text-slate-900 print:text-gray-900 tracking-widest light:tracking-normal drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] print:drop-shadow-none">
-                FINAL_OUTPUT
+                {!(invoice.status === "DUE" || invoice.status === "PARTIAL DUE") ? "Grand Total" : "Total"}
               </span>
               <span className="text-sm font-black text-cyan-400 light:text-slate-900 print:text-gray-900 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] print:drop-shadow-none">
                 ৳{invoice.grandTotal.toLocaleString(undefined, {
@@ -347,6 +357,32 @@ export default function InvoiceView({
                 })}
               </span>
             </div>
+            {(invoice.status === "DUE" || invoice.status === "PARTIAL DUE") && (
+              <>
+                {(invoice.advanceAmount || 0) > 0 && (
+                  <div className="flex justify-between py-2 text-xs text-cyan-600 light:text-slate-700 print:text-gray-600 font-bold tracking-widest light:tracking-normal border-t border-cyan-900/30 print:border-gray-100 mt-2">
+                    <span className="">Advance Paid</span>
+                    <span className="text-cyan-500 light:text-slate-700">
+                      ৳{(invoice.advanceAmount || 0).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between py-3 border-t-2 border-cyan-500 print:border-gray-800 mt-2 bg-red-950/20 light:bg-red-50 p-2 print:bg-transparent print:p-0 print:border-t-2">
+                  <span className="text-sm font-black text-red-400 light:text-red-600 print:text-gray-900 tracking-widest light:tracking-normal drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] print:drop-shadow-none">
+                    Total Due
+                  </span>
+                  <span className="text-sm font-black text-red-400 light:text-red-600 print:text-gray-900 drop-shadow-[0_0_8px_rgba(239,68,68,0.8)] print:drop-shadow-none">
+                    ৳{Math.max(0, invoice.grandTotal - (invoice.advanceAmount || 0)).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 

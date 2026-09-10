@@ -14,6 +14,8 @@ export default function EditInvoicePage() {
   const [items, setItems] = useState<any[]>([]);
   const [discount, setDiscount] = useState(0);
   const [status, setStatus] = useState("PAID");
+  const [dueDate, setDueDate] = useState("");
+  const [advanceAmount, setAdvanceAmount] = useState(0);
   
   const [products, setProducts] = useState<any[]>([]);
   const [productSearch, setProductSearch] = useState("");
@@ -32,6 +34,13 @@ export default function EditInvoicePage() {
         setItems(json.data.items.map((i: any) => ({ ...i, stock: '?' }))); // Real stock will update if we search
         setDiscount(json.data.discount);
         setStatus(json.data.status);
+        if (json.data.dueDate) {
+          const date = new Date(json.data.dueDate);
+          setDueDate(date.toISOString().split('T')[0]);
+        }
+        if (json.data.advanceAmount) {
+          setAdvanceAmount(json.data.advanceAmount);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -112,6 +121,8 @@ export default function EditInvoicePage() {
         })),
         discount: Number(discount),
         status,
+        dueDate: (status === "DUE" || status === "PARTIAL DUE") && dueDate ? dueDate : undefined,
+        advanceAmount: (status === "DUE" || status === "PARTIAL DUE") ? Number(advanceAmount) : 0,
       };
 
       const res = await fetch(`/api/invoices/${id}`, {
@@ -144,7 +155,7 @@ export default function EditInvoicePage() {
         </Link>
         <h1 className="text-2xl font-bold text-cyan-400 light:text-slate-900 tracking-widest light:tracking-normal inline-flex items-center gap-2">
           <Terminal size={24} />
-          EDIT_INVOICE_DATA
+          Edit Invoice
         </h1>
         <span className="w-2 h-4 bg-cyan-400 animate-pulse ml-1 inline-block"></span>
       </div>
@@ -245,7 +256,7 @@ export default function EditInvoicePage() {
                 {items.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-8 text-center text-cyan-700 light:text-slate-600 text-xs font-bold tracking-widest light:tracking-normal">
-                      PAYLOAD_EMPTY: Awaiting input.
+                      No items added to the invoice.
                     </td>
                   </tr>
                 ) : items.map((item, index) => (
@@ -309,10 +320,27 @@ export default function EditInvoicePage() {
                 >
                   <option value="PAID">Paid</option>
                   <option value="DUE">Due</option>
+                  <option value="PARTIAL DUE">Partial Due</option>
                   <option value="CANCELLED">Cancelled</option>
                 </select>
               </div>
             </div>
+            
+            {(status === "DUE" || status === "PARTIAL DUE") && (
+              <div className="group mt-4">
+                <label className="text-[10px] sm:text-xs font-bold text-cyan-600 light:text-slate-700 tracking-widest light:tracking-normal block mb-1">Due Date *</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-700 light:text-slate-600 font-bold">{">"}</span>
+                  <input 
+                    required 
+                    type="date" 
+                    value={dueDate} 
+                    onChange={(e) => setDueDate(e.target.value)}
+                    className="w-full bg-black/50 light:bg-white border border-cyan-900 light:border-slate-300 text-cyan-300 light:text-slate-900 pl-8 pr-4 py-2 focus:outline-none focus:border-cyan-400 light:focus:border-indigo-400 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-colors"
+                  />
+                </div>
+              </div>
+            )}
           </div>
           
           <div className="bg-black/80 light:bg-white backdrop-blur-md p-6 md:p-8 border border-cyan-500/50 light:border-slate-300 shadow-[0_0_30px_rgba(6,182,212,0.15)] relative">
@@ -341,6 +369,25 @@ export default function EditInvoicePage() {
                 <span className="text-lg font-bold text-cyan-400 light:text-slate-900 tracking-widest light:tracking-normal">Grand Total</span>
                 <span className="text-2xl font-bold text-cyan-300 light:text-slate-900 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">৳{grandTotal.toLocaleString()}</span>
               </div>
+              
+              {(status === "DUE" || status === "PARTIAL DUE") && (
+                <>
+                  <div className="flex justify-between items-center text-cyan-600 light:text-slate-700 tracking-widest light:tracking-normal text-sm font-bold mt-4">
+                    <span>Advance Paid (৳)</span>
+                    <input 
+                      type="number" 
+                      min="0"
+                      value={advanceAmount} 
+                      onChange={(e) => setAdvanceAmount(Number(e.target.value))}
+                      className="w-24 bg-black/50 light:bg-white border border-cyan-900 light:border-slate-300 px-2 py-1 text-cyan-300 light:text-slate-900 text-right focus:outline-none focus:border-cyan-400 light:focus:border-indigo-400 focus:shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+                    />
+                  </div>
+                  <div className="pt-2 flex justify-between items-center">
+                    <span className="text-lg font-bold text-red-400 light:text-red-600 tracking-widest light:tracking-normal">Total Due</span>
+                    <span className="text-xl font-bold text-red-500 light:text-red-600">৳{Math.max(0, grandTotal - advanceAmount).toLocaleString()}</span>
+                  </div>
+                </>
+              )}
             </div>
 
             <button 
@@ -348,7 +395,7 @@ export default function EditInvoicePage() {
               disabled={saving}
               className="w-full mt-8 bg-cyan-950/50 light:bg-slate-200 disabled:opacity-50 text-cyan-400 light:text-slate-900 font-bold py-4 border border-cyan-500/50 light:border-slate-300 hover:bg-cyan-900/50 light:hover:bg-indigo-50 hover:text-cyan-300 light:hover:text-indigo-700 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all tracking-widest light:tracking-normal text-sm"
             >
-              {saving ? "EXECUTING_WRITE..." : "EXECUTE_UPDATE"}
+              {saving ? "Updating..." : "Update Invoice"}
             </button>
           </div>
         </div>
