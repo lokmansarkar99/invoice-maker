@@ -113,7 +113,7 @@ export default function AdminLogin() {
           
           <button 
             type="submit" 
-            className="w-full bg-cyan-950/50 light:bg-slate-200 light:bg-indigo-600 text-cyan-400 light:text-slate-900 light:text-white text-sm sm:text-base tracking-widest light:tracking-normal font-bold py-3 border border-cyan-500/50 light:border-slate-300 light:border-transparent hover:bg-cyan-900/50 light:hover:bg-indigo-50 light:hover:bg-indigo-700 hover:text-cyan-300 light:hover:text-indigo-700 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] light:hover:shadow-lg transition-all mt-6 flex items-center justify-center gap-2 relative overflow-hidden group light:rounded-lg"
+            className="w-full bg-cyan-950/50 light:bg-indigo-600 text-cyan-400 light:text-white text-sm sm:text-base tracking-widest light:tracking-normal font-bold py-3 border border-cyan-500/50 light:border-transparent hover:bg-cyan-900/50 light:hover:bg-indigo-700 hover:text-cyan-300 light:hover:text-white hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] light:hover:shadow-lg transition-all mt-6 flex items-center justify-center gap-2 relative overflow-hidden group light:rounded-lg"
           >
             <span className="relative z-10">EXECUTE_LOGIN</span>
             <div className="absolute inset-0 bg-cyan-400/10 light:bg-white/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>

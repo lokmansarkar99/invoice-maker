@@ -6,7 +6,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen flex bg-black light:bg-white text-cyan-300 light:text-slate-900 font-mono light:font-sans relative overflow-hidden">
+    <div className="h-screen flex bg-black light:bg-white text-cyan-300 light:text-slate-900 font-mono light:font-sans relative overflow-hidden print:h-auto print:block print:overflow-visible">
       {/* Fixed Full Screen Background */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none light:hidden"
@@ -24,7 +24,7 @@ export default function DashboardLayout({
       <Sidebar />
 
       {/* Main Content */}
-      <main className="flex-1 pt-16 px-4 pb-6 sm:pt-8 sm:px-6 sm:pb-8 md:p-8 lg:p-12 overflow-y-auto w-full min-w-0 max-w-[100vw] md:max-w-[calc(100vw-16rem)] relative z-10">
+      <main className="flex-1 pt-16 px-4 pb-6 sm:pt-8 sm:px-6 sm:pb-8 md:p-8 lg:p-12 overflow-y-auto w-full min-w-0 max-w-[100vw] md:max-w-[calc(100vw-16rem)] relative z-10 print:p-0 print:m-0 print:w-full print:max-w-none print:overflow-visible">
         {children}
       </main>
     </div>

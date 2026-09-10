@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { encrypt } from "@/lib/auth";
 import connectToDatabase from "@/lib/db";
 import { Admin } from "@/models/Admin";
+import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 
 export async function loginAction(formData: FormData) {
@@ -41,4 +42,5 @@ export async function loginAction(formData: FormData) {
 
 export async function logoutAction() {
   (await cookies()).set("session", "", { expires: new Date(0) });
+  redirect("/admin/login");
 }

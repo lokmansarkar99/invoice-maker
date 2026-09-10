@@ -389,7 +389,7 @@ export default function InvoiceView({
         {/* Footer */}
         <div className="pt-4 mt-16 flex flex-col text-[10px] text-cyan-700 light:text-slate-600 print:text-gray-400 border-t border-cyan-900 light:border-slate-300 print:border-gray-200 w-full font-bold">
           <div className="hidden print:block font-sans">
-            {typeof window !== "undefined" ? window.location.href : ""}
+            {typeof window !== "undefined" ? `${window.location.origin}/invoice/${invoice.invoiceNumber}` : ""}
           </div>
           <div className="tracking-widest light:tracking-normal mb-1 flex items-center justify-between">
             <span>

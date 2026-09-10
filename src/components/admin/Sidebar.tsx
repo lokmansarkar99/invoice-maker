@@ -35,7 +35,7 @@ export default function Sidebar() {
 
       {/* Sidebar Content */}
       <aside
-        className={`fixed md:sticky top-0 left-0 z-40 w-64 h-screen bg-black/90 light:bg-white backdrop-blur-md border-r border-cyan-500/50 light:border-slate-200 shadow-[4px_0_30px_rgba(6,182,212,0.1)] transition-transform duration-300 ease-in-out flex flex-col font-mono light:font-sans ${
+        className={`fixed md:sticky top-0 left-0 z-40 w-64 h-screen bg-black/90 light:bg-white backdrop-blur-md border-r border-cyan-500/50 light:border-slate-200 shadow-[4px_0_30px_rgba(6,182,212,0.1)] transition-transform duration-300 ease-in-out flex flex-col font-mono light:font-sans print:hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
