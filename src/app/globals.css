@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
-@custom-variant light (.light-theme &);
+@variant light (.light-theme &);
+
 :root {
-  --background: #fbfbfc; /* ultra light grey/blue */
-  --foreground: #1e293b; /* slate-800 */
+  --background: #fbfbfc;
+  --foreground: #1e293b;
   
-  --color-primary-accent: #2563eb; /* blue-600 */
-  --color-primary-soft: #dbeafe; /* blue-100 */
+  --color-primary-accent: #2563eb;
+  --color-primary-soft: #dbeafe;
   --color-card-bg: #ffffff;
-  --color-card-border: #f1f5f9; /* slate-100 */
+  --color-card-border: #f1f5f9;
 }
 
 @theme inline {
@@ -30,7 +31,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Clean, modern card styling with smooth blue shadow accent */
 .glass {
   background: var(--color-card-bg);
   border: 1px solid var(--color-card-border);
@@ -45,15 +45,13 @@ html {
 @media print {
   body {
     font-family: ui-sans-serif, system-ui, sans-serif !important;
+    background-color: white;
+    color: black;
+    background-image: none;
   }
   @page {
     size: A4 portrait;
     margin: 1cm;
-  }
-  body {
-    background-color: white;
-    color: black;
-    background-image: none;
   }
   .print\:hidden {
     display: none !important;
